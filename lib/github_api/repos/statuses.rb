@@ -22,11 +22,13 @@ module Github
     #  github.repos.statuses.list 'user-name', 'repo-name', 'sha'
     #  github.repos.statuses.list 'user-name', 'repo-name', 'sha' { |status| ... }
     #
+
+    # https://api.github.com/repos/generalthings/cloudbreak/statuses/commits/e704cadf7ab07bdbfb87c88efd9992bc4a0ac517/statuses?access_token=
     def list(*args)
       arguments(args, :required => [:user, :repo, :sha])
       params = arguments.params
 
-      response = get_request("/repos/#{user}/#{repo}/statuses/#{sha}", params)
+      response = get_request("/repos/#{user}/#{repo}/commits/#{sha}/statuses", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
